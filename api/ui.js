@@ -1,4 +1,3 @@
-const fetch = require('node-fetch')
 const { withUiHook, htm } = require('@zeit/integration-utils')
 
 const { fetchTopics, fetchRegions, reshapeTopics } = require('./_util')
@@ -25,6 +24,7 @@ module.exports = withUiHook(async ({ payload, zeitClient }) => {
 
     try {
         store = await zeitClient.getMetadata()
+        /* eslint-disable-next-line no-empty */
     } catch (e) {}
 
     const projectStore = store[payload.project.id] || {}
@@ -33,7 +33,7 @@ module.exports = withUiHook(async ({ payload, zeitClient }) => {
     let accessKeyId = projectStore.accessKeyId || ''
     let secretAccessKey = projectStore.secretAccessKey || ''
     let edittingAws = !(region && accessKeyId && secretAccessKey)
-    let awsErrors = {}
+    const awsErrors = {}
 
     if (action === 'saveaws') {
         accessKeyId = clientState.accessKeyId.trim()
@@ -96,14 +96,18 @@ module.exports = withUiHook(async ({ payload, zeitClient }) => {
                                     <Option value="" caption="Select a region" />
                                     ${regions.Regions.map(
                                         item => htm`
-                                            <Option value=${item.RegionName} caption=${item.RegionName} />
+                                            <Option value=${
+                                                item.RegionName
+                                            } caption=${item.RegionName} />
                                         `,
                                     )}
                                 </Select>
                             </Box>
                             ${
                                 awsErrors.region
-                                    ? htm`<Box color="var(--geist-error)" display="inline" fontWeight="500">${awsErrors.region}</Box>`
+                                    ? htm`<Box color="var(--geist-error)" display="inline" fontWeight="500">${
+                                          awsErrors.region
+                                      }</Box>`
                                     : ''
                             }
                         </Container>
@@ -140,13 +144,17 @@ module.exports = withUiHook(async ({ payload, zeitClient }) => {
                             <Input label="Access key ID" name="accessKeyId" value=${accessKeyId} />
                             ${
                                 awsErrors.accessKeyId
-                                    ? htm`<Box color="var(--geist-error)" marginBottom="1rem" fontWeight="500">${awsErrors.accessKeyId}</Box>`
+                                    ? htm`<Box color="var(--geist-error)" marginBottom="1rem" fontWeight="500">${
+                                          awsErrors.accessKeyId
+                                      }</Box>`
                                     : ''
                             }
                             <Input label="Secret access key" name="secretAccessKey" value=${secretAccessKey} />
                             ${
                                 awsErrors.secretAccessKey
-                                    ? htm`<Box color="var(--geist-error)" marginBottom="1rem" fontWeight="500">${awsErrors.secretAccessKey}</Box>`
+                                    ? htm`<Box color="var(--geist-error)" marginBottom="1rem" fontWeight="500">${
+                                          awsErrors.secretAccessKey
+                                      }</Box>`
                                     : ''
                             }
                         </Container>
@@ -165,7 +173,7 @@ module.exports = withUiHook(async ({ payload, zeitClient }) => {
 
     const topics = await fetchTopics(accessKeyId, secretAccessKey, region)
     let endpoints = projectStore.endpoints || {}
-    let endpointErrors = {}
+    const endpointErrors = {}
     let endpoint = ''
 
     if (action === 'saveendpoint') {
@@ -393,7 +401,9 @@ module.exports = withUiHook(async ({ payload, zeitClient }) => {
                         <Input label="Endpoint:" name="endpoint" value=${endpoint} />
                         ${
                             endpointErrors.endpoint
-                                ? htm`<Box color="var(--geist-error)" marginBottom="1rem" fontWeight="500">${endpointErrors.endpoint}</Box>`
+                                ? htm`<Box color="var(--geist-error)" marginBottom="1rem" fontWeight="500">${
+                                      endpointErrors.endpoint
+                                  }</Box>`
                                 : ''
                         }
                     </Container>
@@ -410,13 +420,19 @@ module.exports = withUiHook(async ({ payload, zeitClient }) => {
                                     ).pop()}</Box>
                                 </Box>
                                 <Box display="table-cell" padding="10px" textAlign="left" verticalAlign="top" color="var(--accents-6)" fontSize="14px">
-                                    <Checkbox name=${`dev:::${topic.TopicArn}`} label="Development" checked="true" />
+                                    <Checkbox name=${`dev:::${
+                                        topic.TopicArn
+                                    }`} label="Development" checked="true" />
                                 </Box>
                                 <Box display="table-cell" padding="10px" textAlign="left" verticalAlign="top" color="var(--accents-6)" fontSize="14px">
-                                    <Checkbox name=${`staging:::${topic.TopicArn}`} label="Staging" checked="true" />
+                                    <Checkbox name=${`staging:::${
+                                        topic.TopicArn
+                                    }`} label="Staging" checked="true" />
                                 </Box>
                                 <Box display="table-cell" padding="10px" textAlign="left" verticalAlign="top" color="var(--accents-6)" fontSize="14px">
-                                    <Checkbox name=${`prod:::${topic.TopicArn}`} label="Production" checked="true" />
+                                    <Checkbox name=${`prod:::${
+                                        topic.TopicArn
+                                    }`} label="Production" checked="true" />
                                 </Box>
                             </Box>
                         `,
@@ -425,7 +441,9 @@ module.exports = withUiHook(async ({ payload, zeitClient }) => {
                         </Box>
                         ${
                             endpointErrors.topics
-                                ? htm`<Box color="var(--geist-error)" marginBottom="1rem" fontWeight="500">${endpointErrors.topics}</Box>`
+                                ? htm`<Box color="var(--geist-error)" marginBottom="1rem" fontWeight="500">${
+                                      endpointErrors.topics
+                                  }</Box>`
                                 : ''
                         }
                     </Container>

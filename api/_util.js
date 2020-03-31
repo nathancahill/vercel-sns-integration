@@ -51,7 +51,7 @@ const reshapeTopics = endpointTopics => {
 const reshapeMeta = (metadata, target) => {
     const urls = Object.keys(metadata)
 
-    let result = {}
+    const result = {}
 
     urls.forEach(url => {
         ;(metadata[url][target] || []).forEach(topic => {

@@ -25,8 +25,7 @@ module.exports = async (req, res) => {
     const meta = await metaRes.json()
 
     if (!meta[project]) {
-        res.send({})
-        return
+        return res.send({})
     }
 
     const metadata = meta[project]
@@ -48,7 +47,7 @@ module.exports = async (req, res) => {
         },
     )
     const deployment = await deploymentRes.json()
-    const target = deployment.target
+    const { target } = deployment
 
     let selector = 'dev'
 
@@ -58,9 +57,11 @@ module.exports = async (req, res) => {
         selector = 'staging'
     }
 
-    let topics = reshapeMeta(metadata.endpoints || {}, selector)
+    const topics = reshapeMeta(metadata.endpoints || {}, selector)
 
+    /* eslint-disable-next-line no-restricted-syntax */
     for (const topic of Object.keys(topics)) {
+        /* eslint-disable-next-line no-await-in-loop */
         const subscriptions = await sns
             .listSubscriptionsByTopic({
                 TopicArn: topic,
@@ -70,20 +71,23 @@ module.exports = async (req, res) => {
         const currentEndpoints = subscriptions.Subscriptions.map(
             s => s.Endpoint,
         )
-        let nextEndpoints = []
+        const nextEndpoints = []
 
-        const urls = topics[topic].forEach(url => {
+        topics[topic].forEach(url => {
             nextEndpoints.push(`https://${deployment.url}${url}`)
             deployment.alias.forEach(alias => {
                 nextEndpoints.push(`https://${alias}${url}`)
             })
         })
 
+        /* eslint-disable-next-line no-restricted-syntax */
         for (const endpoint of nextEndpoints) {
             if (currentEndpoints.includes(endpoint)) {
+                /* eslint-disable-next-line no-continue */
                 continue
             }
 
+            /* eslint-disable-next-line no-await-in-loop */
             await sns
                 .subscribe({
                     Protocol: 'https',
@@ -94,5 +98,5 @@ module.exports = async (req, res) => {
         }
     }
 
-    res.send({})
+    return res.send({})
 }

@@ -1,9 +1,7 @@
 const URLSearchParams = require('url-search-params')
 const fetch = require('node-fetch')
 
-const DOMAIN = process.env.APP_DOMAIN
-const CLIENT_ID = process.env.CLIENT_ID
-const CLIENT_SECRET = process.env.CLIENT_SECRET
+const { APP_DOMAIN: DOMAIN, CLIENT_ID, CLIENT_SECRET } = process.env
 
 module.exports = async (req, res) => {
     const { code, configurationId, next } = req.query
@@ -22,9 +20,10 @@ module.exports = async (req, res) => {
         },
         body: searchParams,
     })
+
     const json = await tokenRes.json()
 
-    const metaRes = await fetch(
+    await fetch(
         `https://api.zeit.co/v1/integrations/configuration/${configurationId}/metadata`,
         {
             method: 'POST',
@@ -38,23 +37,20 @@ module.exports = async (req, res) => {
         },
     )
 
-    const webhookRes = await fetch(
-        `https://api.zeit.co/v1/integrations/webhooks`,
-        {
-            method: 'POST',
-            headers: {
-                'content-type': 'application/json',
-                authorization: `Bearer ${json.access_token}`,
-            },
-            body: JSON.stringify({
-                name: 'SNS',
-                url: `${DOMAIN}/api/hook?configurationId=${configurationId}&token=${
-                    json.access_token
-                }`,
-                events: ['deployment-ready'],
-            }),
+    await fetch(`https://api.zeit.co/v1/integrations/webhooks`, {
+        method: 'POST',
+        headers: {
+            'content-type': 'application/json',
+            authorization: `Bearer ${json.access_token}`,
         },
-    )
+        body: JSON.stringify({
+            name: 'SNS',
+            url: `${DOMAIN}/api/hook?configurationId=${configurationId}&token=${
+                json.access_token
+            }`,
+            events: ['deployment-ready'],
+        }),
+    })
 
-    res.send({ next })
+    return res.send({ next })
 }
