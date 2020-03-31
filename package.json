@@ -1,0 +1,14 @@
+{
+    "name": "zeit-sns-integration",
+    "private": true,
+    "dependencies": {
+        "@zeit/integration-utils": "^0.6.4",
+        "aws-sdk": "^2.648.0",
+        "node-fetch": "^2.6.0",
+        "url-search-params": "^1.1.0"
+    },
+    "devDependencies": {
+        "jest": "^25.2.4",
+        "prettier": "^2.0.2"
+    }
+}

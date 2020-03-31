@@ -1,0 +1,20 @@
+<!DOCTYPE html>
+<html>
+    <head>
+        <title>Redirecting...</title>
+    </head>
+    <body>
+        Redirecting...
+        <script type="text/javascript">
+            fetch(`/api/oauth${window.location.search}`, {
+                method: 'POST',
+            })
+                .then(res => res.json())
+                .then(json => {
+                    if (json.next) {
+                        window.location.replace(json.next)
+                    }
+                })
+        </script>
+    </body>
+</html>
