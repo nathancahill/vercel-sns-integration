@@ -113,7 +113,7 @@ module.exports = withUiHook(async ({ payload, zeitClient }) => {
                         </Container>
                         <BR />
                         <P><B>IAM Policy</B></P>
-                        <P>Create an IAM Policy with the following permissions: List Subscriptions, List Topics and Subscribe.</P>
+                        <P>Create an IAM Policy with the following permissions: List Topics, List Subscriptions by Topic, and Subscribe.</P>
                         <Code>
 {
     "Version": "2012-10-17",
@@ -128,9 +128,8 @@ module.exports = withUiHook(async ({ payload, zeitClient }) => {
             "Sid": "VisualEditor1",
             "Effect": "Allow",
             "Action": [
-                "sns:ListTopics",
-                "sns:GetSubscriptionAttributes",
-                "sns:ListSubscriptions"
+                "sns:ListSubscriptionsByTopic",
+                "sns:ListTopics"
             ],
             "Resource": "*"
         }
