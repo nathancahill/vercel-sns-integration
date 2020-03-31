@@ -1,0 +1,54 @@
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+h1,
+h2,
+h3 {
+    @apply font-bold mb-1;
+}
+
+h1 {
+    @apply text-3xl;
+}
+
+h2 {
+    @apply text-2xl;
+}
+
+h3 {
+    @apply text-xl;
+}
+
+h5 {
+    @apply mb-1;
+}
+
+i {
+    @apply font-serif;
+}
+
+p,
+pre {
+    @apply mb-4;
+}
+
+p {
+    @apply text-gray-700 font-normal;
+}
+
+hr {
+    @apply my-10;
+}
+
+a {
+    @apply text-blue-500;
+}
+
+a:hover {
+    @apply text-blue-600;
+}
+
+ul li {
+    @apply list-disc;
+}

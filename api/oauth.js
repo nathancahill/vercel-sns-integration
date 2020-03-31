@@ -45,9 +45,7 @@ module.exports = async (req, res) => {
         },
         body: JSON.stringify({
             name: 'SNS',
-            url: `${DOMAIN}/api/hook?configurationId=${configurationId}&token=${
-                json.access_token
-            }`,
+            url: `${DOMAIN}/api/hook?configurationId=${configurationId}&token=${json.access_token}`,
             events: ['deployment-ready'],
         }),
     })
