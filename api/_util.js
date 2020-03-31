@@ -1,6 +1,17 @@
+const crypto = require('crypto')
 const AWS = require('aws-sdk/global')
 const SNS = require('aws-sdk/clients/sns')
 const EC2 = require('aws-sdk/clients/ec2')
+
+const { CLIENT_SECRET } = process.env
+
+const verifySignature = (req, payload) => {
+    const signature = crypto
+        .createHmac('sha1', CLIENT_SECRET)
+        .update(payload)
+        .digest('hex')
+    return signature === req.headers['x-zeit-signature']
+}
 
 const fetchTopics = async (accessKeyId, secretAccessKey, region) => {
     AWS.config.update({
@@ -63,6 +74,7 @@ const reshapeMeta = (metadata, target) => {
 }
 
 module.exports = {
+    verifySignature,
     fetchTopics,
     fetchRegions,
     reshapeTopics,
