@@ -17,7 +17,7 @@
         "jest": "^25.5.3",
         "postcss-cli": "^7.1.1",
         "prettier": "^2.0.5",
-        "tailwindcss": "^1.4.2"
+        "tailwindcss": "^1.4.4"
     },
     "scripts": {
         "build": "postcss src/styles.css -o public/static/styles.css",
