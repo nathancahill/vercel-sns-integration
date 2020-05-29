@@ -2,6 +2,7 @@ const URLSearchParams = require('url-search-params')
 const fetch = require('node-fetch')
 
 const { APP_DOMAIN: DOMAIN, CLIENT_ID, CLIENT_SECRET } = process.env
+const BASE = 'https://api.vercel.com'
 
 module.exports = async (req, res) => {
     const { code, configurationId, next } = req.query
@@ -13,7 +14,7 @@ module.exports = async (req, res) => {
     searchParams.set('code', code)
     searchParams.set('redirect_uri', `${DOMAIN}/`)
 
-    const tokenRes = await fetch('https://api.zeit.co/v2/oauth/access_token', {
+    const tokenRes = await fetch(`${BASE}/v2/oauth/access_token`, {
         method: 'POST',
         headers: {
             'content-type': 'application/x-www-form-urlencoded',
@@ -24,7 +25,7 @@ module.exports = async (req, res) => {
     const json = await tokenRes.json()
 
     await fetch(
-        `https://api.zeit.co/v1/integrations/configuration/${configurationId}/metadata`,
+        `${BASE}/v1/integrations/configuration/${configurationId}/metadata`,
         {
             method: 'POST',
             headers: {
@@ -37,7 +38,7 @@ module.exports = async (req, res) => {
         },
     )
 
-    await fetch(`https://api.zeit.co/v1/integrations/webhooks`, {
+    await fetch(`${BASE}/v1/integrations/webhooks`, {
         method: 'POST',
         headers: {
             'content-type': 'application/json',

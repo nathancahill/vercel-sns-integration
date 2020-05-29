@@ -4,6 +4,8 @@ const SNS = require('aws-sdk/clients/sns')
 
 const { reshapeMeta, verifySignature } = require('./_util')
 
+const BASE = 'https://api.vercel.com'
+
 module.exports = async (req, res) => {
     if (req.method !== 'POST') {
         return res.status(404).send({})
@@ -19,7 +21,7 @@ module.exports = async (req, res) => {
     } = req.body
 
     const metaRes = await fetch(
-        `https://api.zeit.co/v1/integrations/configuration/${configurationId}/metadata`,
+        `${BASE}/v1/integrations/configuration/${configurationId}/metadata`,
         {
             headers: {
                 authorization: `Bearer ${token}`,
@@ -48,7 +50,7 @@ module.exports = async (req, res) => {
     const sns = new SNS()
 
     const deploymentRes = await fetch(
-        `https://api.zeit.co/v11/now/deployments/${deploymentId}`,
+        `${BASE}/v11/now/deployments/${deploymentId}`,
         {
             headers: {
                 authorization: `Bearer ${token}`,

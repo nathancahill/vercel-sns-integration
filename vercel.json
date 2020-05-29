@@ -2,7 +2,7 @@
     "env": {
         "APP_AWS_ACCESS_KEY_ID": "AKIAZY3E2Y6JVYNCHJ53",
         "APP_AWS_SECRET_ACCESS_KEY": "@zeit-sns-integration-aws-secret-access-key",
-        "APP_DOMAIN": "https://zeit-sns-integration.now.sh",
+        "APP_DOMAIN": "https://sns-integration.vercel.app",
         "CLIENT_ID": "@zeit-sns-integration-client-id",
         "CLIENT_SECRET": "@zeit-sns-integration-client-secret"
     }
