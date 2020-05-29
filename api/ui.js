@@ -272,9 +272,6 @@ module.exports = withUiHook(async ({ payload, zeitClient }) => {
                                 <Box display="table-cell" background="var(--accents-1)" color="var(--accents-5)" fontWeight="400" padding="0 10px" borderBottom="1px solid var(--accents-2)" borderTop="1px solid var(--accents-2)" verticalAlign="top">
                                     <Box display="flex" minHeight="40px" fontSize="12px" alignItems="center">PREVIEW</Box>
                                 </Box>
-                                <Box display="table-cell" background="var(--accents-1)" color="var(--accents-5)" fontWeight="400" padding="0 10px" borderBottom="1px solid var(--accents-2)" borderTop="1px solid var(--accents-2)" verticalAlign="top">
-                                    <Box display="flex" minHeight="40px" fontSize="12px" alignItems="center">DEVELOPMENT</Box>
-                                </Box>
                                 <Box display="table-cell" background="var(--accents-1)" color="var(--accents-5)" fontWeight="400" padding="0 10px" borderBottom="1px solid var(--accents-2)" borderTop="1px solid var(--accents-2)" verticalAlign="top" borderBottom="1px solid var(--accents-2)" borderRadius="0 4px 4px 0" borderRight="1px solid var(--accents-2)" borderTop="1px solid var(--accents-2)">
                                 </Box>
                             </Box>
@@ -289,8 +286,6 @@ module.exports = withUiHook(async ({ payload, zeitClient }) => {
                             <Box display="table-row">
                                 <Box display="table-cell" padding="10px" textAlign="left" verticalAlign="top" color="var(--accents-6)" fontSize="14px">
                                     <Box fontWeight="500" color="var(--geist-foreground)">${url}</Box>
-                                </Box>
-                                <Box display="table-cell" padding="10px" textAlign="left" verticalAlign="top" color="var(--accents-6)" fontSize="14px">
                                 </Box>
                                 <Box display="table-cell" padding="10px" textAlign="left" verticalAlign="top" color="var(--accents-6)" fontSize="14px">
                                 </Box>
@@ -345,28 +340,11 @@ module.exports = withUiHook(async ({ payload, zeitClient }) => {
                                         }
                                     </Box>
                                     <Box display="table-cell" padding="10px" textAlign="left" verticalAlign="top" color="var(--accents-6)" fontSize="14px">
-                                        ${
-                                            endpointTopics[topic].dev
-                                                ? htm`
-                                            <Box display="inline-block" width="10px" height="10px" borderRadius="5px" background="var(--geist-cyan-dark)" marginRight="4.33333px"></Box>
-                                        `
-                                                : htm`
-                                            <Box display="inline-block" width="10px" height="10px" borderRadius="5px" background="var(--geist-error)" marginRight="4.33333px"></Box>
-                                        `
-                                        }
-                                        ${
-                                            endpointTopics[topic].dev
-                                                ? 'Yes'
-                                                : 'No'
-                                        }
-                                    </Box>
-                                    <Box display="table-cell" padding="10px" textAlign="left" verticalAlign="top" color="var(--accents-6)" fontSize="14px">
                                     </Box>
                                 </Box>
                             `,
                             )}
                             <Box display="table-row">
-                                <Box display="table-cell" borderBottom="1px solid var(--accents-2)"></Box>
                                 <Box display="table-cell" borderBottom="1px solid var(--accents-2)"></Box>
                                 <Box display="table-cell" borderBottom="1px solid var(--accents-2)"></Box>
                                 <Box display="table-cell" borderBottom="1px solid var(--accents-2)"></Box>
@@ -413,9 +391,6 @@ module.exports = withUiHook(async ({ payload, zeitClient }) => {
                                 </Box>
                                 <Box display="table-cell" padding="10px" textAlign="left" verticalAlign="top" color="var(--accents-6)" fontSize="14px">
                                     <Checkbox name=${`staging:::${topic.TopicArn}`} label="Preview" checked="true" />
-                                </Box>
-                                <Box display="table-cell" padding="10px" textAlign="left" verticalAlign="top" color="var(--accents-6)" fontSize="14px">
-                                    <Checkbox name=${`dev:::${topic.TopicArn}`} label="Development" checked="true" />
                                 </Box>
                             </Box>
                         `,
