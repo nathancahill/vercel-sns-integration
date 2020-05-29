@@ -270,7 +270,7 @@ module.exports = withUiHook(async ({ payload, zeitClient }) => {
                                     <Box display="flex" minHeight="40px" fontSize="12px" alignItems="center">DEVELOPMENT</Box>
                                 </Box>
                                 <Box display="table-cell" background="var(--accents-1)" color="var(--accents-5)" fontWeight="400" padding="0 10px" borderBottom="1px solid var(--accents-2)" borderTop="1px solid var(--accents-2)" verticalAlign="top">
-                                    <Box display="flex" minHeight="40px" fontSize="12px" alignItems="center">STAGING</Box>
+                                    <Box display="flex" minHeight="40px" fontSize="12px" alignItems="center">PREVIEW</Box>
                                 </Box>
                                 <Box display="table-cell" background="var(--accents-1)" color="var(--accents-5)" fontWeight="400" padding="0 10px" borderBottom="1px solid var(--accents-2)" borderTop="1px solid var(--accents-2)" verticalAlign="top">
                                     <Box display="flex" minHeight="40px" fontSize="12px" alignItems="center">PRODUCTION</Box>
@@ -412,7 +412,7 @@ module.exports = withUiHook(async ({ payload, zeitClient }) => {
                                     <Checkbox name=${`dev:::${topic.TopicArn}`} label="Development" checked="true" />
                                 </Box>
                                 <Box display="table-cell" padding="10px" textAlign="left" verticalAlign="top" color="var(--accents-6)" fontSize="14px">
-                                    <Checkbox name=${`staging:::${topic.TopicArn}`} label="Staging" checked="true" />
+                                    <Checkbox name=${`staging:::${topic.TopicArn}`} label="Preview" checked="true" />
                                 </Box>
                                 <Box display="table-cell" padding="10px" textAlign="left" verticalAlign="top" color="var(--accents-6)" fontSize="14px">
                                     <Checkbox name=${`prod:::${topic.TopicArn}`} label="Production" checked="true" />
