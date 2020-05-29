@@ -8,7 +8,7 @@ module.exports = withUiHook(async ({ payload, zeitClient }) => {
     const header = htm`
         <Container>
             <H1>SNS</H1>
-            <H2>Register ZEIT deployments on AWS SNS</H2>
+            <H2>Register deployments on AWS SNS</H2>
             <HR />
             <ProjectSwitcher />
         </Container>
@@ -89,7 +89,7 @@ module.exports = withUiHook(async ({ payload, zeitClient }) => {
                       <FsContent>
                         <H2>AWS</H2>
                         <P><B>Region</B></P>
-                        <P>To register ZEIT deployments on AWS SNS, select the AWS region for the SNS resources.</P>
+                        <P>To register deployments on AWS SNS, select the AWS region for the SNS resources.</P>
                         <Container>
                             <Box display="inline" marginRight="10px">
                                 <Select name="region" value=${region}>
@@ -152,7 +152,7 @@ module.exports = withUiHook(async ({ payload, zeitClient }) => {
                       </FsContent>
                       <FsFooter>
                           <Box display="flex" justifyContent="space-between" width="100%" alignItems="center">
-                            <P>All information is stored privately on ZEIT.</P>
+                            <P>All information is stored privately on Vercel.</P>
                             <Button action="saveaws">Save and Continue</Button>
                           </Box>
                       </FsFooter>
