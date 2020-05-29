@@ -267,13 +267,13 @@ module.exports = withUiHook(async ({ payload, zeitClient }) => {
                                     <Box display="flex" minHeight="40px" fontSize="12px" alignItems="center">TOPIC</Box>
                                 </Box>
                                 <Box display="table-cell" background="var(--accents-1)" color="var(--accents-5)" fontWeight="400" padding="0 10px" borderBottom="1px solid var(--accents-2)" borderTop="1px solid var(--accents-2)" verticalAlign="top">
-                                    <Box display="flex" minHeight="40px" fontSize="12px" alignItems="center">DEVELOPMENT</Box>
+                                    <Box display="flex" minHeight="40px" fontSize="12px" alignItems="center">PRODUCTION</Box>
                                 </Box>
                                 <Box display="table-cell" background="var(--accents-1)" color="var(--accents-5)" fontWeight="400" padding="0 10px" borderBottom="1px solid var(--accents-2)" borderTop="1px solid var(--accents-2)" verticalAlign="top">
                                     <Box display="flex" minHeight="40px" fontSize="12px" alignItems="center">PREVIEW</Box>
                                 </Box>
                                 <Box display="table-cell" background="var(--accents-1)" color="var(--accents-5)" fontWeight="400" padding="0 10px" borderBottom="1px solid var(--accents-2)" borderTop="1px solid var(--accents-2)" verticalAlign="top">
-                                    <Box display="flex" minHeight="40px" fontSize="12px" alignItems="center">PRODUCTION</Box>
+                                    <Box display="flex" minHeight="40px" fontSize="12px" alignItems="center">DEVELOPMENT</Box>
                                 </Box>
                                 <Box display="table-cell" background="var(--accents-1)" color="var(--accents-5)" fontWeight="400" padding="0 10px" borderBottom="1px solid var(--accents-2)" borderTop="1px solid var(--accents-2)" verticalAlign="top" borderBottom="1px solid var(--accents-2)" borderRadius="0 4px 4px 0" borderRight="1px solid var(--accents-2)" borderTop="1px solid var(--accents-2)">
                                 </Box>
@@ -314,7 +314,7 @@ module.exports = withUiHook(async ({ payload, zeitClient }) => {
                                     </Box>
                                     <Box display="table-cell" padding="10px" textAlign="left" verticalAlign="top" color="var(--accents-6)" fontSize="14px">
                                         ${
-                                            endpointTopics[topic].dev
+                                            endpointTopics[topic].prod
                                                 ? htm`
                                             <Box display="inline-block" width="10px" height="10px" borderRadius="5px" background="var(--geist-cyan-dark)" marginRight="4.33333px"></Box>
                                         `
@@ -323,7 +323,7 @@ module.exports = withUiHook(async ({ payload, zeitClient }) => {
                                         `
                                         }
                                         ${
-                                            endpointTopics[topic].dev
+                                            endpointTopics[topic].prod
                                                 ? 'Yes'
                                                 : 'No'
                                         }
@@ -346,7 +346,7 @@ module.exports = withUiHook(async ({ payload, zeitClient }) => {
                                     </Box>
                                     <Box display="table-cell" padding="10px" textAlign="left" verticalAlign="top" color="var(--accents-6)" fontSize="14px">
                                         ${
-                                            endpointTopics[topic].prod
+                                            endpointTopics[topic].dev
                                                 ? htm`
                                             <Box display="inline-block" width="10px" height="10px" borderRadius="5px" background="var(--geist-cyan-dark)" marginRight="4.33333px"></Box>
                                         `
@@ -355,7 +355,7 @@ module.exports = withUiHook(async ({ payload, zeitClient }) => {
                                         `
                                         }
                                         ${
-                                            endpointTopics[topic].prod
+                                            endpointTopics[topic].dev
                                                 ? 'Yes'
                                                 : 'No'
                                         }
