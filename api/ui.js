@@ -409,13 +409,13 @@ module.exports = withUiHook(async ({ payload, zeitClient }) => {
                                     ).pop()}</Box>
                                 </Box>
                                 <Box display="table-cell" padding="10px" textAlign="left" verticalAlign="top" color="var(--accents-6)" fontSize="14px">
-                                    <Checkbox name=${`dev:::${topic.TopicArn}`} label="Development" checked="true" />
+                                    <Checkbox name=${`prod:::${topic.TopicArn}`} label="Production" checked="true" />
                                 </Box>
                                 <Box display="table-cell" padding="10px" textAlign="left" verticalAlign="top" color="var(--accents-6)" fontSize="14px">
                                     <Checkbox name=${`staging:::${topic.TopicArn}`} label="Preview" checked="true" />
                                 </Box>
                                 <Box display="table-cell" padding="10px" textAlign="left" verticalAlign="top" color="var(--accents-6)" fontSize="14px">
-                                    <Checkbox name=${`prod:::${topic.TopicArn}`} label="Production" checked="true" />
+                                    <Checkbox name=${`dev:::${topic.TopicArn}`} label="Development" checked="true" />
                                 </Box>
                             </Box>
                         `,
