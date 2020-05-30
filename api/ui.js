@@ -166,9 +166,11 @@ module.exports = withUiHook(async ({ payload, zeitClient }) => {
     let endpoints = projectStore.endpoints || {}
     const endpointErrors = {}
     let endpoint = ''
+    let filter = false
 
     if (action === 'saveendpoint') {
         endpoint = clientState.endpoint.trim()
+        filter = clientState.filter
 
         if (endpoint === '') {
             endpointErrors.endpoint = 'Required.'
@@ -198,6 +200,7 @@ module.exports = withUiHook(async ({ payload, zeitClient }) => {
                     dev: devKeys,
                     staging: stagingKeys,
                     prod: prodKeys,
+                    filter,
                 },
             }
 
@@ -402,6 +405,10 @@ module.exports = withUiHook(async ({ payload, zeitClient }) => {
                                 ? htm`<Box color="var(--geist-error)" marginBottom="1rem" fontWeight="500">${endpointErrors.topics}</Box>`
                                 : ''
                         }
+                    </Container>
+                    <Container>
+                        <P><Box display="inline" fontWeight="500">Filter by origin:</Box></P>
+                        <Checkbox name="filter" label="Filter by origin" checked="false" />
                     </Container>
                   </FsContent>
                   <FsFooter>

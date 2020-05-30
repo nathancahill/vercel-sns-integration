@@ -84,28 +84,42 @@ module.exports = async (req, res) => {
         )
         const nextEndpoints = []
 
-        topics[topic].forEach(url => {
-            nextEndpoints.push(`https://${deployment.url}${url}`)
+        topics[topics].forEach(({ url, filter }) => {
+            nextEndpoints.push({
+                url: `https://${deployment.url}${url}`,
+                origin: deployment.url,
+                filter,
+            })
             deployment.alias.forEach(alias => {
-                nextEndpoints.push(`https://${alias}${url}`)
+                nextEndpoints.push({
+                    url: `https://${alias}${url}`,
+                    origin: alias,
+                    filter,
+                })
             })
         })
 
         /* eslint-disable-next-line no-restricted-syntax */
         for (const endpoint of nextEndpoints) {
-            if (currentEndpoints.includes(endpoint)) {
+            if (currentEndpoints.includes(endpoint.url)) {
                 /* eslint-disable-next-line no-continue */
                 continue
             }
 
+            const subscribeOptions = {
+                Protocol: 'https',
+                TopicArn: topic,
+                Endpoint: endpoint.url,
+            }
+
+            if (endpoint.filter) {
+                subscribeOptions.FilterPolicy = {
+                    origin: [endpoint.origin],
+                }
+            }
+
             /* eslint-disable-next-line no-await-in-loop */
-            await sns
-                .subscribe({
-                    Protocol: 'https',
-                    TopicArn: topic,
-                    Endpoint: endpoint,
-                })
-                .promise()
+            await sns.subscribe(subscribeOptions).promise()
         }
     }
 

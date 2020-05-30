@@ -66,7 +66,10 @@ const reshapeMeta = (metadata, target) => {
 
     urls.forEach(url => {
         ;(metadata[url][target] || []).forEach(topic => {
-            result[topic] = [...(result[topic] || []), url]
+            result[topic] = [
+                ...(result[topic] || []),
+                { url, filter: metadata[url].filter },
+            ]
         })
     })
 

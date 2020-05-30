@@ -35,12 +35,13 @@ test('reshapeMeta', () => {
         {
             '/api/hook': {
                 dev: ['a'],
+                filter: true,
             },
         },
         'dev',
     )
 
-    expect(urls).toMatchObject({ a: ['/api/hook'] })
+    expect(urls).toMatchObject({ a: [{ url: '/api/hook', filter: true }] })
 })
 
 test('reshapeMeta empty', () => {
@@ -48,6 +49,7 @@ test('reshapeMeta empty', () => {
         {
             '/api/hook': {
                 dev: ['a'],
+                filter: true,
             },
         },
         'prod',
@@ -61,17 +63,22 @@ test('reshapeMeta multiple', () => {
         {
             '/api/hook': {
                 dev: ['a', 'b'],
+                filter: true,
             },
             '/api/hook2': {
                 dev: ['a', 'c'],
+                filter: false,
             },
         },
         'dev',
     )
 
     expect(urls).toMatchObject({
-        a: ['/api/hook', '/api/hook2'],
-        b: ['/api/hook'],
-        c: ['/api/hook2'],
+        a: [
+            { url: '/api/hook', filter: true },
+            { url: '/api/hook2', filter: false },
+        ],
+        b: [{ url: '/api/hook', filter: true }],
+        c: [{ url: '/api/hook2', filter: false }],
     })
 })
