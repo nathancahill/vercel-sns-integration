@@ -111,6 +111,7 @@
 	import Endpoint from '$lib/components/endpoint.svelte';
 	import Domain from '$lib/components/domain.svelte';
 	import LinkIcon from '$lib/icons/link.svelte';
+	import Code from '$lib/components/code.svelte';
 
 	export let configurationId;
 	export let projectId;
@@ -123,7 +124,9 @@
 	export let filterByOrigin;
 	export let env;
 
-	let loading = true;
+	let loading = false;
+	let showingPolicy = false;
+	let showingOrigin = false;
 
 	let savedConfiguration = {
 		configurationId,
@@ -182,12 +185,31 @@
 		endpoints = endpoints.filter((_, i) => i !== e.detail);
 	};
 
+	const handlePolicyPopup = () => {
+		showingPolicy = true;
+	};
+
+	const handleOriginPopup = () => {
+		showingOrigin = true;
+	};
+
+	const handlePopupClose = () => {
+		showingPolicy = false;
+		showingOrigin = false;
+	};
+
+	const handleKeydown = (e) => {
+		if (e.key === 'Escape') {
+			handlePopupClose();
+		}
+	};
+
 	beforeNavigate(() => {
-		loading = true;
+		// loading = true;
 	});
 
 	afterNavigate(() => {
-		loading = false;
+		// loading = false;
 
 		savedConfiguration = {
 			configurationId,
@@ -198,11 +220,47 @@
 			filterByOrigin
 		};
 	});
+
+	const origin = `await sns.publish({
+    Message: JSON.stringify({
+        email: 'name@example.com',
+    }),
+    TopicArn: 'arn:aws:sns:us-east-1:xxxxxxxxxx:signup',
+    MessageAttributes: {
+        origin: {
+            DataType: 'String',
+            StringValue: process.env.VERCEL_URL,
+        },
+    },
+})`;
+
+	const policy = `{
+    "Version": "2012-10-17",
+    "Statement": [
+        {
+            "Sid": "VisualEditor0",
+            "Effect": "Allow",
+            "Action": "sns:Subscribe",
+            "Resource": "arn:aws:sns:*:*:*"
+        },
+        {
+            "Sid": "VisualEditor1",
+            "Effect": "Allow",
+            "Action": [
+                "sns:ListSubscriptionsByTopic",
+                "sns:ListTopics"
+            ],
+            "Resource": "*"
+        }
+    ]
+}`;
 </script>
 
 <svelte:head>
 	<title>Configure {project.name} - Vercel SNS</title>
 </svelte:head>
+
+<svelte:window on:keydown={handleKeydown} />
 
 <div class="max-w-7xl mx-auto sm:px-6 lg:px-8 mt-12">
 	<div class="border-b border-gray-200 pb-2 flex">
@@ -380,7 +438,12 @@
 				<div class="sm:flex-auto">
 					<h1 class="text-xl font-semibold text-gray-900">Filtering</h1>
 					<p class="mt-2 text-sm text-gray-700">
-						Prevent SNS messages from being delivered to mismatched deployments. Recommended.
+						Recommended. Prevent SNS messages from being delivered to mismatched deployments.
+						<span
+							on:click={handleOriginPopup}
+							class="font-medium text-indigo-600 hover:text-indigo-500 cursor-pointer"
+							>Show origin setting <span aria-hidden="true">&rarr;</span>
+						</span>
 					</p>
 				</div>
 			</div>
@@ -412,6 +475,11 @@
 					<h1 class="text-xl font-semibold text-gray-900">Environment Variables</h1>
 					<p class="mt-2 text-sm text-gray-700">
 						Required for the integration to interact with AWS.
+						<span
+							on:click={handlePolicyPopup}
+							class="font-medium text-indigo-600 hover:text-indigo-500 cursor-pointer"
+							>Show example IAM policy <span aria-hidden="true">&rarr;</span>
+						</span>
 					</p>
 				</div>
 			</div>
@@ -452,5 +520,34 @@
 				</div>
 			</div>
 		</div>
+
+		{#if showingPolicy || showingOrigin}
+			<div
+				class="absolute w-screen h-screen inset-0 bg-black/10 flex items-center justify-center"
+				on:click={handlePopupClose}
+			>
+				<div class="bg-white shadow sm:rounded-lg max-w-6xl" on:click|stopPropagation>
+					<div class="px-4 py-5 sm:p-6">
+						{#if showingPolicy}
+							<h3 class="text-lg leading-6 font-medium text-gray-900">Example IAM Policy</h3>
+							<p class="mt-2 text-sm text-gray-700">
+								Minimal policy allowing the integration to create subscriptions to topics.
+							</p>
+							<div class="mt-6 max-w-xl text-sm text-gray-500">
+								<Code code={policy} language="json" />
+							</div>
+						{:else if showingOrigin}
+							<h3 class="text-lg leading-6 font-medium text-gray-900">Example SNS Publish</h3>
+							<p class="mt-2 text-sm text-gray-700">
+								Setting message attributes when a message is added to SNS.
+							</p>
+							<div class="mt-6 max-w-xl text-sm text-gray-500">
+								<Code code={origin} language="javascript" />
+							</div>
+						{/if}
+					</div>
+				</div>
+			</div>
+		{/if}
 	{/if}
 </div>
