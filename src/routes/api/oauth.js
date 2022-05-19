@@ -1,7 +1,7 @@
-import KVdb from 'kvdb.io';
+import kvdb from '$lib/kvdb';
 import { VERCEL_BASE } from '$lib/config';
 
-const { APP_DOMAIN, CLIENT_ID, CLIENT_SECRET, KVDB_BUCKET } = process.env;
+const { APP_DOMAIN, CLIENT_ID, CLIENT_SECRET } = process.env;
 
 export async function post({ request }) {
 	const { code, next } = await request.json();
@@ -23,18 +23,13 @@ export async function post({ request }) {
 
 	const { access_token, token_type, installation_id, user_id, team_id } = await tokenRes.json();
 
-	const bucket = KVdb.bucket(KVDB_BUCKET);
-
-	await bucket.set(
+	await kvdb.set(installation_id, {
+		access_token,
+		token_type,
 		installation_id,
-		JSON.stringify({
-			access_token,
-			token_type,
-			installation_id,
-			user_id,
-			team_id
-		})
-	);
+		user_id,
+		team_id
+	});
 
 	return { body: { next } };
 }
