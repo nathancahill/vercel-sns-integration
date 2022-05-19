@@ -105,7 +105,7 @@
 </script>
 
 <script>
-	import { isEqual } from 'lodash-es';
+	import { cloneDeep, isEqual } from 'lodash-es';
 	import { goto, afterNavigate, beforeNavigate } from '$app/navigation';
 
 	import Endpoint from '$lib/components/endpoint.svelte';
@@ -124,18 +124,18 @@
 	export let filterByOrigin;
 	export let env;
 
-	let loading = false;
+	let loading = true;
 	let showingPolicy = false;
 	let showingOrigin = false;
 
-	let savedConfiguration = {
+	let savedConfiguration = cloneDeep({
 		configurationId,
 		projectId,
 		endpoints,
 		production,
 		preview,
 		filterByOrigin
-	};
+	});
 
 	$: configuration = {
 		configurationId,
@@ -165,7 +165,7 @@
 		if (!r.ok) {
 		}
 
-		savedConfiguration = configuration;
+		savedConfiguration = cloneDeep(configuration);
 	};
 
 	const handleAddEndpoint = () => {
@@ -205,20 +205,20 @@
 	};
 
 	beforeNavigate(() => {
-		// loading = true;
+		loading = true;
 	});
 
 	afterNavigate(() => {
-		// loading = false;
+		loading = false;
 
-		savedConfiguration = {
+		savedConfiguration = cloneDeep({
 			configurationId,
 			projectId,
 			endpoints,
 			production,
 			preview,
 			filterByOrigin
-		};
+		});
 	});
 
 	const origin = `await sns.publish({
