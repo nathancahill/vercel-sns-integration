@@ -54,6 +54,9 @@
 			};
 		}
 
+		const a = await fetch(`/api/regions`);
+		const { regions } = await a.json();
+
 		const p = await fetch(
 			`/api/configuration?configurationId=${configurationId}&projectId=${projectId}`
 		);
@@ -64,7 +67,8 @@
 				endpoints: [],
 				production: project.alias?.[0],
 				preview: true,
-				filterByOrigin: true
+				filterByOrigin: true,
+				region: 'us-east-1'
 			};
 		}
 
@@ -85,10 +89,11 @@
 			]
 		];
 
-		const { endpoints, production, preview, filterByOrigin } = configuration;
+		const { endpoints, production, preview, filterByOrigin, region } = configuration;
 
 		return {
 			props: {
+				regions,
 				configurationId,
 				projectId,
 				projects,
@@ -98,6 +103,7 @@
 				production,
 				preview,
 				filterByOrigin,
+				region,
 				env
 			}
 		};
@@ -113,6 +119,7 @@
 	import LinkIcon from '$lib/icons/link.svelte';
 	import Code from '$lib/components/code.svelte';
 
+	export let regions;
 	export let configurationId;
 	export let projectId;
 	export let projects;
@@ -122,6 +129,7 @@
 	export let production;
 	export let preview;
 	export let filterByOrigin;
+	export let region;
 	export let env;
 
 	let loading = true;
@@ -134,7 +142,8 @@
 		endpoints,
 		production,
 		preview,
-		filterByOrigin
+		filterByOrigin,
+		region
 	});
 
 	$: configuration = {
@@ -143,7 +152,8 @@
 		endpoints,
 		production,
 		preview,
-		filterByOrigin
+		filterByOrigin,
+		region
 	};
 
 	$: unsaved = !isEqual(savedConfiguration, configuration);
@@ -217,7 +227,8 @@
 			endpoints,
 			production,
 			preview,
-			filterByOrigin
+			filterByOrigin,
+			region
 		});
 	});
 
@@ -519,6 +530,29 @@
 							</span>
 						{/if}
 					</p>
+				</div>
+			</div>
+		</div>
+
+		<div class="mt-12">
+			<div class="sm:flex sm:items-center">
+				<div class="sm:flex-auto">
+					<h1 class="text-xl font-semibold text-gray-900">AWS Region</h1>
+					<p class="mt-2 text-sm text-gray-700">AWS region for interacting with the SNS API.</p>
+				</div>
+			</div>
+			<div class="mt-8">
+				<div class="flex-1">
+					<select
+						id="region"
+						name="region"
+						bind:value={region}
+						class="w-64 mt-1 block pl-3 pr-10 py-2 text-base border-gray-300 focus:outline-none focus:ring-indigo-500 focus:border-indigo-500 sm:text-sm rounded-md"
+					>
+						{#each regions as r}
+							<option value={r}>{r}</option>
+						{/each}
+					</select>
 				</div>
 			</div>
 		</div>
