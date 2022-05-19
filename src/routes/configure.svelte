@@ -221,7 +221,8 @@
 		});
 	});
 
-	const origin = `await sns.publish({
+	const origin =
+		`await sns.publish({
     Message: JSON.stringify({
         email: 'name@example.com',
     }),
@@ -229,7 +230,8 @@
     MessageAttributes: {
         origin: {
             DataType: 'String',
-            StringValue: process.env.VERCEL_URL,
+            StringValue: proc` +
+		`ess.env.VERCEL_URL,
         },
     },
 })`;
