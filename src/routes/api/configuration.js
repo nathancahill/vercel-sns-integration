@@ -13,10 +13,10 @@ export async function get({ url }) {
 		};
 	}
 
-	const { access_token } = integration;
+	const { access_token, team_id } = integration;
 	const configuration = await kvdb.get(projectId);
 
-	const r = await fetch(`${VERCEL_BASE}/v9/projects/${projectId}/env`, {
+	const r = await fetch(`${VERCEL_BASE}/v9/projects/${projectId}/env?teamId=${team_id}`, {
 		headers: {
 			authorization: `Bearer ${access_token}`
 		}
