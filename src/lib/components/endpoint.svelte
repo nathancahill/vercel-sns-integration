@@ -50,7 +50,7 @@
 			<code>{endpoint.url}</code>
 		{/if}
 	</td>
-	<td class="whitespace-nowrap py-4 px-3 text-sm text-gray-500">
+	<td class="whitespace-nowrap py-4 px-3 text-sm font-medium text-gray-900">
 		{#if endpoint.editing}
 			<div>
 				<label for="url" class="sr-only">Topic</label>
@@ -61,7 +61,7 @@
 					name="topic"
 					id="topic"
 					class="shadow-sm focus:ring-indigo-500 focus:border-indigo-500 block w-full sm:text-sm border-gray-300 rounded-md"
-					placeholder="sns-topic"
+					placeholder="arn:aws:sns:us-east-2:123456789012:MyTopic"
 				/>
 			</div>
 		{:else}
