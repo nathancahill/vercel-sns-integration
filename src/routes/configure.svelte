@@ -559,7 +559,7 @@
 
 		{#if showingPolicy || showingOrigin}
 			<div
-				class="absolute w-screen h-screen inset-0 bg-black/10 flex items-center justify-center"
+				class="fixed w-screen h-screen inset-0 bg-black/10 flex items-center justify-center"
 				on:click={handlePopupClose}
 			>
 				<div class="bg-white shadow sm:rounded-lg max-w-6xl" on:click|stopPropagation>
