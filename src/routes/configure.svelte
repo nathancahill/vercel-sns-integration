@@ -534,7 +534,7 @@
 			</div>
 		</div>
 
-		<div class="mt-12">
+		<div class="mt-12 mb-32">
 			<div class="sm:flex sm:items-center">
 				<div class="sm:flex-auto">
 					<h1 class="text-xl font-semibold text-gray-900">AWS Region</h1>
