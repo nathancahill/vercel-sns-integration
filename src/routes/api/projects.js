@@ -11,19 +11,21 @@ export async function get({ url }) {
 		};
 	}
 
-	console.log(integration);
-
 	const { access_token, team_id } = integration;
 
-	const r = await fetch(`${VERCEL_BASE}/v9/projects?teamId=${team_id}`, {
+	const searchParams = new URLSearchParams();
+
+	if (team_id) {
+		searchParams.set('teamId', team_id);
+	}
+
+	const r = await fetch(`${VERCEL_BASE}/v9/projects?${searchParams}`, {
 		headers: {
 			authorization: `Bearer ${access_token}`
 		}
 	});
 
 	const j = await r.json();
-
-	console.log(j);
 
 	const projects = j.projects.map((p) => ({
 		name: p.name,
