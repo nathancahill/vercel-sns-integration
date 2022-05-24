@@ -20,9 +20,20 @@ export async function post({ request, headers }) {
 		};
 	}
 
-	const { projectId } = data;
+	const {
+		type,
+		payload: { projectId }
+	} = data;
+
+	if (type !== 'deployment-ready') {
+		return {
+			status: 404
+		};
+	}
 
 	const configuration = await kvdb.get(projectId);
+
+	console.log(configuration);
 
 	// Configure AWS
 
