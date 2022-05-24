@@ -135,8 +135,10 @@ export async function post({ request }) {
 		};
 
 		if (project.filterByOrigin) {
-			subscribeOptions.FilterPolicy = {
-				origin: [endpoint.origin]
+			subscribeOptions.Attributes = {
+				FilterPolicy: JSON.stringify({
+					origin: [endpoint.origin]
+				})
 			};
 		}
 
